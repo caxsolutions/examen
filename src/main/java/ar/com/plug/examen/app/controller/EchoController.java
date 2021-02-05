@@ -1,4 +1,4 @@
-package ar.com.plug.examen.app.rest;
+package ar.com.plug.examen.app.controller;
 
 import ar.com.plug.examen.app.api.MessageApi;
 import ar.com.plug.examen.domain.service.ProcessMessageService;
