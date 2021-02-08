@@ -7,8 +7,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -40,7 +42,7 @@ public class Vendedores implements Serializable {
 	@Column(nullable = false)
 	private Boolean habiltiado;
 	
-	@OneToMany(mappedBy = "vendedor")
-	private Set<Compras> compras = new HashSet<>();
+	//@OneToMany(mappedBy = "vendedor", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+	//private Set<Compras> compras = new HashSet<>();
 	
 }

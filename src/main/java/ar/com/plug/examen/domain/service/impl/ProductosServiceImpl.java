@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.plug.examen.domain.entity.Productos;
 import ar.com.plug.examen.domain.service.ProductoRepository;
@@ -27,6 +28,7 @@ public class ProductosServiceImpl {
 	 * @param productos
 	 * @return
 	 */
+	@Transactional
 	public Productos saveProductos(Productos productos) {
 		return productoRepository.save(productos);
 	}
@@ -57,6 +59,7 @@ public class ProductosServiceImpl {
 	 * @return
 	 * @throws Exception 
 	 */
+	@Transactional
 	public Productos updateProductos(Productos productos) throws Exception {
 		
 		if(productos == null || productos.getIdproducto() == null) {
@@ -78,5 +81,28 @@ public class ProductosServiceImpl {
 		return null;
 	}
 	
-	
+	/**
+	 * method that delete entity by id 
+	 * @autor CACP - 5/02/2021
+	 * @return
+	 */
+	@Transactional
+	public String deleteProductoById(Integer idProducto) throws Exception{
+		
+		if(idProducto == null) {
+			throw new Exception("El campo idproducto no puede ser nulo.");
+		}
+		
+		Productos producto = getProductoById(idProducto);
+		
+		if(producto != null && producto.getIdproducto() != null) {
+			
+			productoRepository.deleteById(idProducto);
+			
+			return "Producto eliminado con exito.";
+			
+		}else {
+			return "Producto con el id " + idProducto + " No se encontro en el sistema.";
+		}
+	}
 }

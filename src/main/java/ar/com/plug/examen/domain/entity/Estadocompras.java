@@ -4,12 +4,10 @@
 package ar.com.plug.examen.domain.entity;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -37,7 +35,7 @@ public class Estadocompras implements Serializable {
 	@GeneratedValue
 	private Integer idestadocompra;
 	
-	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="idcompra")
 	private Compras compra;
 	
@@ -45,7 +43,7 @@ public class Estadocompras implements Serializable {
 	private Integer estado;	
 	
 	@Column(nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar fechacompra;
+	@Temporal(TemporalType.DATE)
+	private Date fechaestado;
 	
 }

@@ -7,8 +7,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -36,8 +38,5 @@ public class Clientes implements Serializable {
 	private String documento;
 	@Column(nullable = false, length = 200)
 	private String nombre;
-	
-	@OneToMany(mappedBy = "cliente")
-	private Set<Compras> compras = new HashSet<>();
 	
 }
