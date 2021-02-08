@@ -34,9 +34,9 @@ public class ComprasController {
 	private EstadocomprasServiceImpl serviceEstadoCompras;
 	
 	/**
-	 * endpoint create a purchase record  
+	 * endpoint creating a record 
 	 * @autor CACP - 8/02/2021
-	 * @param products
+	 * @param product
 	 * @return
 	 */
     @PostMapping(path = "/addshop", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -49,7 +49,7 @@ public class ComprasController {
     }
 
     /**
-     * endpoint get all record
+     * endpoint that returns all records 
      * @autor CACP - 8/02/2021
      * @return
      */
@@ -60,8 +60,9 @@ public class ComprasController {
     }
 
     /**
-     * endpoint get shop by id
+     * endpoint that returns a record by id 
      * @autor CACP - 8/02/2021
+     * @param idcompra
      * @return
      */
     @GetMapping(path = "/getshop/{idcompra}")

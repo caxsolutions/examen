@@ -32,18 +32,35 @@ public class VendedoresController {
 	private VendedoresServiceImpl service;
 	
 	
+	/**
+	 * endpoint creating a record 
+	 * @autor CACP - 8/02/2021
+	 * @param sellers
+	 * @return
+	 */
     @PostMapping(path = "/addseller", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addseller(@RequestBody Vendedores sellers)
     {
         return new ResponseEntity<>(service.saveVendedores(sellers), HttpStatus.CREATED);
     }
     
+    /**
+     * endpoint that returns all records 
+     * @autor CACP - 8/02/2021
+     * @return
+     */
     @GetMapping(path = "/getsellers")
     public ResponseEntity<?> getsellers()
     {
         return new ResponseEntity<>(service.getVendedores(), HttpStatus.OK);
     }
     
+    /**
+     * endpoint that returns a record by id 
+     * @autor CACP - 8/02/2021
+     * @param idsellere
+     * @return
+     */
     @GetMapping(path = "/getseller/{idsellere}")
     public ResponseEntity<?> getseller(@PathVariable Integer idsellere){
     	
@@ -56,6 +73,13 @@ public class VendedoresController {
     	}
     }
 
+    /**
+     * endpoint updating the registry 
+     * @autor CACP - 8/02/2021
+     * @param vendors
+     * @return
+     * @throws Exception
+     */
     @PutMapping(path = "/updateseller", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateseller(@RequestBody Vendedores vendors) throws Exception{
     	try {
@@ -73,6 +97,13 @@ public class VendedoresController {
 		}
     }
     
+    /**
+     * endpoint that deletes a record 
+     * @autor CACP - 8/02/2021
+     * @param idsellere
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping(path = "/deleteseller/{idsellere}")
     public ResponseEntity<?> deleteseller(@PathVariable Integer idsellere)throws Exception{
     	try {

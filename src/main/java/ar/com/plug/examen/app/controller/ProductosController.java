@@ -32,18 +32,35 @@ public class ProductosController {
 	private ProductosServiceImpl service;
 	
 	
+	/**
+	 * endpoint creating a record 
+	 * @autor CACP - 8/02/2021
+	 * @param products
+	 * @return
+	 */
     @PostMapping(path = "/addproduct", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addProduct(@RequestBody Productos products)
     {
         return new ResponseEntity<>(service.saveProductos(products), HttpStatus.CREATED);
     }
     
+    /**
+     * endpoint that returns all records 
+     * @autor CACP - 8/02/2021
+     * @return
+     */
     @GetMapping(path = "/getproducts")
     public ResponseEntity<?> getProducts()
     {
         return new ResponseEntity<>(service.getProductos(), HttpStatus.OK);
     }
     
+    /**
+     * endpoint that returns a record by id 
+     * @autor CACP - 8/02/2021
+     * @param idproducto
+     * @return
+     */
     @GetMapping(path = "/getproduct/{idproducto}")
     public ResponseEntity<?> getProduct(@PathVariable Integer idproducto)
     {
@@ -57,6 +74,13 @@ public class ProductosController {
     	
     }
 
+    /**
+     * endpoint updating the registry 
+     * @autor CACP - 8/02/2021
+     * @param products
+     * @return
+     * @throws Exception
+     */
     @PutMapping(path = "/updateproduct", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateProduct(@RequestBody Productos products) throws Exception{
     	try {
@@ -64,7 +88,7 @@ public class ProductosController {
     		Productos productos = service.updateProductos(products);
     		
     		if(productos == null) {
-    			return new ResponseEntity<>("No se encontró ningún vendedor con el nombre " + productos.getDescripcion(), HttpStatus.BAD_REQUEST);
+    			return new ResponseEntity<>("No se encontró ningún vendedor con el nombre " + products.getDescripcion(), HttpStatus.BAD_REQUEST);
     		}
 
     		return new ResponseEntity<>(productos, HttpStatus.CREATED);
@@ -73,6 +97,13 @@ public class ProductosController {
 		}
     }
     
+    /**
+     * endpoint that deletes a record 
+     * @autor CACP - 8/02/2021
+     * @param idproducto
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping(path = "/deleteproduct/{idproducto}")
     public ResponseEntity<?> deleteProduct(@PathVariable Integer idproducto)throws Exception{
     	try {
