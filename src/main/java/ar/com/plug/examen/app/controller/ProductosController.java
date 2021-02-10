@@ -26,6 +26,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @autor luxos CACP - 5/02/2021
@@ -33,6 +34,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @RestController
 @RequestMapping(path = "/products")
+@Slf4j
 @Tag(name = "Productos", description = "ABM Productos")
 public class ProductosController {
 
@@ -74,11 +76,12 @@ public class ProductosController {
     @PostMapping(path = "/addproduct", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addProduct(@RequestBody Productos products){
 		try {
-			
+			log.info("[addProduct] adicionando producto.");
+			return new ResponseEntity<>(service.saveProductos(products), HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.warn("[addProduct] Error adicionando producto.",e);
 			return badRequest(e);
 		}
-        return new ResponseEntity<>(service.saveProductos(products), HttpStatus.CREATED);
     }
     
     /**
@@ -114,8 +117,10 @@ public class ProductosController {
     @GetMapping(path = "/getproducts")
     public ResponseEntity<?> getProducts(){
 		try {
+			log.info("[getProducts] consultando todos los productos.");
 			return new ResponseEntity<>(service.getProductos(), HttpStatus.OK);
 		} catch (Exception e) {
+			log.warn("[getProducts] consultando todos los productos.", e);
 			return badRequest(e);
 		}
     }
@@ -154,6 +159,7 @@ public class ProductosController {
     @GetMapping(path = "/getproduct/{idproducto}")
     public ResponseEntity<?> getProduct(@PathVariable Integer idproducto){
 		try {
+			log.info("[getProduct] consultando producto por id.");
 			Productos productos = service.getProductoById(idproducto);
 			
 			if(productos != null) {
@@ -162,6 +168,7 @@ public class ProductosController {
 				return new ResponseEntity<>("No se encontró ningún producto con el código "+ idproducto, HttpStatus.BAD_REQUEST);
 			}
 		} catch (Exception e) {
+			log.warn("[getProduct] Erro consultando producto por id.", e);
 			return badRequest(e);
 		}
     }
@@ -201,7 +208,7 @@ public class ProductosController {
     @PutMapping(path = "/updateproduct", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateProduct(@RequestBody Productos products) throws Exception{
     	try {
-    		
+    		log.info("[updateProduct] actualizando producto.");
     		Productos productos = service.updateProductos(products);
     		
     		if(productos == null) {
@@ -210,6 +217,7 @@ public class ProductosController {
 
     		return new ResponseEntity<>(productos, HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.warn("[updateProduct] Error actualizando producto.", e);
 			return badRequest(e);
 		}
     }
@@ -249,8 +257,10 @@ public class ProductosController {
     @DeleteMapping(path = "/deleteproduct/{idproducto}")
     public ResponseEntity<?> deleteProduct(@PathVariable Integer idproducto)throws Exception{
     	try {
+    		log.info("[deleteProduct] eliminando producto.");
     		return new ResponseEntity<>(service.deleteProductoById(idproducto), HttpStatus.ACCEPTED);
 		} catch (Exception e) {
+			log.warn("[deleteProduct] Error eliminando producto.", e);
 			return badRequest(e);
 		}
     }

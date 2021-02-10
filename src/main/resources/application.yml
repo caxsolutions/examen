@@ -16,4 +16,13 @@ server:
   port: 8080
   servlet:
     context-path: '/payments'
+
+logging:
+  level:
+    org.springframework: ERROR
+    ar.com.plug.examen.app.controller: DEBUG
+  pattern:
+    console: "%d{dd-yyyy-MM HH:mm:ss.SSS} [%t] %-5level [%c] - %msg%n"
+    file: "%d %p %c{1.} [%t] %m%n"
+  file: app.log
 ---

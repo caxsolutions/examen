@@ -27,6 +27,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @autor luxos CACP - 5/02/2021
@@ -35,6 +36,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping(path = "/clients")
 @AllArgsConstructor
+@Slf4j
 @Tag(name = "Clientes", description = "ABM Clientes")
 public class ClientesController {
 
@@ -75,8 +77,10 @@ public class ClientesController {
     @PostMapping(path = "/addclient", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addclient(@RequestBody Clientes clients){
 		try {
+			log.info("[addclient] adicionando cliente.");
 			return new ResponseEntity<>(service.saveClientes(clients), HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.warn("[addclient] Error adicionando cliente.",e);
 			return badRequest(e);
 		}
     }
@@ -114,8 +118,10 @@ public class ClientesController {
     @GetMapping(path = "/getclients")
     public ResponseEntity<?> getclients(){
     	try {
+    		log.info("[getclients] consultando todos los clientes.");
     		return new ResponseEntity<>(service.getClientes(), HttpStatus.OK);
 		} catch (Exception e) {
+			log.warn("[getclients] Error consultando clientes.", e);
 			return badRequest(e);
 		}
     }
@@ -154,6 +160,7 @@ public class ClientesController {
     @GetMapping(path = "/getclient/{idcliente}")
     public ResponseEntity<?> getclient(@PathVariable Integer idcliente){
     	try {
+    		log.info("[getclient] consultando cliente por id.");
     		Clientes clientes = service.getClientesById(idcliente);
     		if(clientes != null) {
     			return new ResponseEntity<>(clientes, HttpStatus.OK);
@@ -161,6 +168,7 @@ public class ClientesController {
     			return new ResponseEntity<>("No se encontró ningún cliente con el código "+ idcliente, HttpStatus.BAD_REQUEST);
     		}
 		} catch (Exception e) {
+			log.warn("[getclient] Error consultando cliente por id.");
 			return badRequest(e);
 		}
     }
@@ -200,7 +208,7 @@ public class ClientesController {
     @PutMapping(path = "/updateclient", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateclient(@RequestBody Clientes clientes) throws Exception{
     	try {
-    		
+    		log.info("[updateclient] actualizando cliente.");
     		Clientes clientes2 = service.updateClientes(clientes);
     		
     		if(clientes2 == null) {
@@ -209,6 +217,7 @@ public class ClientesController {
 
     		return new ResponseEntity<>(clientes2, HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.warn("[updateclient] Error actualizando cliente.", e);
 			return badRequest(e);
 		}
     }
@@ -248,8 +257,10 @@ public class ClientesController {
     @DeleteMapping(path = "/deleteclient/{idcliente}")
     public ResponseEntity<?> deleteclient(@PathVariable Integer idcliente)throws Exception{
     	try {
+    		log.info("[deleteclient] eliminando cliente.");
     		return new ResponseEntity<>(service.deleteclienteById(idcliente), HttpStatus.ACCEPTED);
 		} catch (Exception e) {
+			log.warn("[deleteclient] Error eliminando cliente.",e);
 			return badRequest(e);
 		}
     }

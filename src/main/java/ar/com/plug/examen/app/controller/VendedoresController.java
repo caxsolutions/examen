@@ -26,6 +26,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @autor luxos CACP - 5/02/2021
@@ -33,6 +34,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @RestController
 @RequestMapping(path = "/vendors")
+@Slf4j
 @Tag(name = "Vendedores", description = "ABM Vendedores")
 public class VendedoresController {
 
@@ -74,8 +76,10 @@ public class VendedoresController {
     @PostMapping(path = "/addseller", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addseller(@RequestBody Vendedores sellers){
 		try {
+			log.info("[addseller] adicionando vendedor.");
 			return new ResponseEntity<>(service.saveVendedores(sellers), HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.warn("[addseller] Error adicionando vendedor.",e);
 			return badRequest(e);
 		}
     }
@@ -113,8 +117,10 @@ public class VendedoresController {
     @GetMapping(path = "/getsellers")
     public ResponseEntity<?> getsellers(){
 		try {
+			log.info("[getsellers] consultando todos los vendedores.");
 			return new ResponseEntity<>(service.getVendedores(), HttpStatus.OK);
 		} catch (Exception e) {
+			log.warn("[getsellers] consultando todos los vendedores.", e);
 			return badRequest(e);
 		}
     }
@@ -153,6 +159,7 @@ public class VendedoresController {
     @GetMapping(path = "/getseller/{idsellere}")
     public ResponseEntity<?> getseller(@PathVariable Integer idsellere){
     	try {
+    		log.info("[getseller] consultando vendedor por id.");
     		Vendedores vendedores = service.getVendedoresById(idsellere);
     		
     		if(vendedores != null){
@@ -161,6 +168,7 @@ public class VendedoresController {
     			return new ResponseEntity<>("No se encontró ningún vendedor con el código " + idsellere, HttpStatus.BAD_REQUEST);
     		}
 		} catch (Exception e) {
+			log.warn("[getseller] Error consultando vendedor por id.", e);
 			return badRequest(e);
 		}
     }
@@ -200,7 +208,7 @@ public class VendedoresController {
     @PutMapping(path = "/updateseller", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateseller(@RequestBody Vendedores vendors) throws Exception{
     	try {
-    		
+    		log.info("[updateseller] actualizando vendedor.");
     		Vendedores vendedores = service.updateVendedores(vendors);
     		
     		if(vendedores == null) {
@@ -210,6 +218,7 @@ public class VendedoresController {
     		return new ResponseEntity<>(service.updateVendedores(vendors), HttpStatus.CREATED);
     		
 		} catch (Exception e) {
+			log.warn("[updateseller] Error actualizando vendedor.", e);
 			return badRequest(e);
 		}
     }
@@ -249,8 +258,10 @@ public class VendedoresController {
     @DeleteMapping(path = "/deleteseller/{idsellere}")
     public ResponseEntity<?> deleteseller(@PathVariable Integer idsellere)throws Exception{
     	try {
+    		log.info("[deleteseller] eliminando vendedor.");
     		return new ResponseEntity<>(service.deleteVendedoresById(idsellere), HttpStatus.ACCEPTED);
 		} catch (Exception e) {
+			log.warn("[deleteseller] Error eliminando vendedor.", e);
 			return badRequest(e);
 		}
     }

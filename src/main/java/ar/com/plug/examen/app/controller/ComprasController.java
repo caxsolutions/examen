@@ -26,6 +26,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @autor luxos CACP - 5/02/2021
@@ -33,6 +34,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @RestController
 @RequestMapping(path = "/shop")
+@Slf4j
 @Tag(name = "Compras", description = "ABM Compras")
 public class ComprasController {
 
@@ -73,10 +75,12 @@ public class ComprasController {
 			}
 	)
     @PostMapping(path = "/addshop", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addProduct(@RequestBody Compras products)throws Exception{
+    public ResponseEntity<?> addShop(@RequestBody Compras products)throws Exception{
     	try {
+    		log.info("[addShop] adicionando compra.");
     		return new ResponseEntity<>(service.saveCompras(products), HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.warn("[addclient] Error adicionando compra.",e);
 			return badRequest(e);
 		}
     }
@@ -114,8 +118,10 @@ public class ComprasController {
     @GetMapping(path = "/getshops")
     public ResponseEntity<?> getshops(){
 		try {
+			log.info("[getshops] consultando todas las compras.");
 			return new ResponseEntity<>(service.getCompras(), HttpStatus.OK);
 		} catch (Exception e) {
+			log.warn("[getshops] Error consultando todas las compras.", e);
 			return badRequest(e);
 		}
     }
@@ -154,6 +160,7 @@ public class ComprasController {
     @GetMapping(path = "/getshop/{idcompra}")
     public ResponseEntity<?> getshop(@PathVariable Integer idcompra){
 		try {
+			log.info("[getshop] consultando compra por id.");
 			Compras compras = service.getComprasById(idcompra);
 			
 			if(compras != null) {
@@ -162,6 +169,7 @@ public class ComprasController {
 				return new ResponseEntity<>("No se encontró ninguna compra con el código "+ idcompra, HttpStatus.BAD_REQUEST);
 			}
 		} catch (Exception e) {
+			log.warn("[getshop] Error consultando compra por id.",e);
 			return badRequest(e);
 		}
     }
@@ -202,6 +210,7 @@ public class ComprasController {
     public ResponseEntity<?> registerpurchase(@RequestBody Estadocompras estadocompras) throws Exception{
     	try {
     		
+    		log.info("[registerpurchase] registrando compra.");
     		Estadocompras estadocomprasSave = serviceEstadoCompras.saveEstadocompras(estadocompras);
     		
     		if(estadocomprasSave == null) {
@@ -210,6 +219,7 @@ public class ComprasController {
 
     		return new ResponseEntity<>(estadocomprasSave, HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.warn("[registerpurchase] Error registrando compra.", e);
 			return badRequest(e);
 		}
     }
