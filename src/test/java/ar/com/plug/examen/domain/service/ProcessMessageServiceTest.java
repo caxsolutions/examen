@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import ar.com.plug.examen.domain.entity.Message;
+import ar.com.plug.examen.domain.model.Message;
 import ar.com.plug.examen.domain.service.impl.ProcessMessageServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)

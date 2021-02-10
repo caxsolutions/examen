@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.com.plug.examen.domain.entity.Clientes;
+import ar.com.plug.examen.domain.model.Clientes;
 import ar.com.plug.examen.domain.service.ClientesRepository;
 
 /**

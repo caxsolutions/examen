@@ -16,8 +16,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.com.plug.examen.domain.entity.Productos;
+import ar.com.plug.examen.domain.model.ErrorObject;
+import ar.com.plug.examen.domain.model.Productos;
 import ar.com.plug.examen.domain.service.impl.ProductosServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * @autor luxos CACP - 5/02/2021
@@ -25,7 +33,7 @@ import ar.com.plug.examen.domain.service.impl.ProductosServiceImpl;
  */
 @RestController
 @RequestMapping(path = "/products")
-//@CrossOrigin(origins = "*")
+@Tag(name = "Productos", description = "ABM Productos")
 public class ProductosController {
 
 	@Autowired
@@ -38,9 +46,38 @@ public class ProductosController {
 	 * @param products
 	 * @return
 	 */
+	@Operation(
+			summary = "Crear productos",
+			description = "Creacion de productos.",
+			tags = "Productos"
+	)
+	@ApiResponses(
+			value = {
+					@ApiResponse(
+							responseCode = "201",
+							description = "Request is sccuessful - Created",
+							content = @Content(
+									array = @ArraySchema(
+											schema = @Schema(implementation = Productos.class)
+									)
+							)
+					),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorObject.class)
+                            )
+                    )
+			}
+	)
     @PostMapping(path = "/addproduct", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addProduct(@RequestBody Productos products)
-    {
+    public ResponseEntity<?> addProduct(@RequestBody Productos products){
+		try {
+			
+		} catch (Exception e) {
+			return badRequest(e);
+		}
         return new ResponseEntity<>(service.saveProductos(products), HttpStatus.CREATED);
     }
     
@@ -49,10 +86,38 @@ public class ProductosController {
      * @autor CACP - 8/02/2021
      * @return
      */
+	@Operation(
+			summary = "Retorna todos los productos",
+			description = "consutlar todos los productos.",
+			tags = "Productos"
+	)
+	@ApiResponses(
+			value = {
+					@ApiResponse(
+							responseCode = "201",
+							description = "Request is sccuessful",
+							content = @Content(
+									array = @ArraySchema(
+											schema = @Schema(implementation = Productos.class)
+									)
+							)
+					),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorObject.class)
+                            )
+                    )
+			}
+	)	
     @GetMapping(path = "/getproducts")
-    public ResponseEntity<?> getProducts()
-    {
-        return new ResponseEntity<>(service.getProductos(), HttpStatus.OK);
+    public ResponseEntity<?> getProducts(){
+		try {
+			return new ResponseEntity<>(service.getProductos(), HttpStatus.OK);
+		} catch (Exception e) {
+			return badRequest(e);
+		}
     }
     
     /**
@@ -61,17 +126,44 @@ public class ProductosController {
      * @param idproducto
      * @return
      */
+	@Operation(
+			summary = "Retorna producto por id",
+			description = "consutlar producto por Id.",
+			tags = "Productos"
+	)
+	@ApiResponses(
+			value = {
+					@ApiResponse(
+							responseCode = "201",
+							description = "Request is sccuessful",
+							content = @Content(
+									array = @ArraySchema(
+											schema = @Schema(implementation = Productos.class)
+									)
+							)
+					),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorObject.class)
+                            )
+                    )
+			}
+	)	
     @GetMapping(path = "/getproduct/{idproducto}")
-    public ResponseEntity<?> getProduct(@PathVariable Integer idproducto)
-    {
-    	Productos productos = service.getProductoById(idproducto);
-    	
-    	if(productos != null) {
-    		return new ResponseEntity<>(productos, HttpStatus.OK);
-    	}else {
-    		return new ResponseEntity<>("No se encontró ningún producto con el código "+ idproducto, HttpStatus.BAD_REQUEST);
-    	}
-    	
+    public ResponseEntity<?> getProduct(@PathVariable Integer idproducto){
+		try {
+			Productos productos = service.getProductoById(idproducto);
+			
+			if(productos != null) {
+				return new ResponseEntity<>(productos, HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>("No se encontró ningún producto con el código "+ idproducto, HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e) {
+			return badRequest(e);
+		}
     }
 
     /**
@@ -81,6 +173,31 @@ public class ProductosController {
      * @return
      * @throws Exception
      */
+	@Operation(
+			summary = "actualiza informacion del producto",
+			description = "actualizar producto por Id.",
+			tags = "Productos"
+	)
+	@ApiResponses(
+			value = {
+					@ApiResponse(
+							responseCode = "200",
+							description = "Request is sccuessful",
+							content = @Content(
+									array = @ArraySchema(
+											schema = @Schema(implementation = Productos.class)
+									)
+							)
+					),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorObject.class)
+                            )
+                    )
+			}
+	)	
     @PutMapping(path = "/updateproduct", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateProduct(@RequestBody Productos products) throws Exception{
     	try {
@@ -93,7 +210,7 @@ public class ProductosController {
 
     		return new ResponseEntity<>(productos, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return badRequest(e);
 		}
     }
     
@@ -104,14 +221,58 @@ public class ProductosController {
      * @return
      * @throws Exception
      */
+	@Operation(
+			summary = "eliminar producto por id",
+			description = "elimina producto por Id.",
+			tags = "Productos"
+	)
+	@ApiResponses(
+			value = {
+					@ApiResponse(
+							responseCode = "202",
+							description = "Request is sccuessful - Accepted",
+							content = @Content(
+									array = @ArraySchema(
+											schema = @Schema(implementation = Productos.class)
+									)
+							)
+					),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorObject.class)
+                            )
+                    )
+			}
+	)	
     @DeleteMapping(path = "/deleteproduct/{idproducto}")
     public ResponseEntity<?> deleteProduct(@PathVariable Integer idproducto)throws Exception{
     	try {
     		return new ResponseEntity<>(service.deleteProductoById(idproducto), HttpStatus.ACCEPTED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return badRequest(e);
 		}
     }
 
-    
+    private ResponseEntity<?> notFound() {
+        return new ResponseEntity<>(
+                new ErrorObject(HttpStatus.NOT_FOUND.toString(), "Member not found"),
+                HttpStatus.NOT_FOUND
+        );
+    }
+
+    private ResponseEntity<?> badRequest(Throwable throwable) {
+        return new ResponseEntity<>(
+                new ErrorObject(HttpStatus.BAD_REQUEST.toString(), "Bad request"),
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    private ResponseEntity<?> conflict() {
+        return new ResponseEntity<>(
+                new ErrorObject(HttpStatus.CONFLICT.toString(), "Member already exists"),
+                HttpStatus.CONFLICT
+        );
+    }
 }

@@ -5,7 +5,7 @@ package ar.com.plug.examen.domain.service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import ar.com.plug.examen.domain.entity.Estadocompras;
+import ar.com.plug.examen.domain.model.Estadocompras;
 
 /**
  * @autor luxos CACP -  5/2/2021

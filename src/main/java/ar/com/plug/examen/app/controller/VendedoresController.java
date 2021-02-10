@@ -16,8 +16,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.com.plug.examen.domain.entity.Vendedores;
+import ar.com.plug.examen.domain.model.ErrorObject;
+import ar.com.plug.examen.domain.model.Vendedores;
 import ar.com.plug.examen.domain.service.impl.VendedoresServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * @autor luxos CACP - 5/02/2021
@@ -25,7 +33,7 @@ import ar.com.plug.examen.domain.service.impl.VendedoresServiceImpl;
  */
 @RestController
 @RequestMapping(path = "/vendors")
-//@CrossOrigin(origins = "*")
+@Tag(name = "Vendedores", description = "ABM Vendedores")
 public class VendedoresController {
 
 	@Autowired
@@ -38,10 +46,38 @@ public class VendedoresController {
 	 * @param sellers
 	 * @return
 	 */
+	@Operation(
+			summary = "Crear Vendedores",
+			description = "Creacion de Vendedores.",
+			tags = "Vendedores"
+	)
+	@ApiResponses(
+			value = {
+					@ApiResponse(
+							responseCode = "201",
+							description = "Request is sccuessful - Created",
+							content = @Content(
+									array = @ArraySchema(
+											schema = @Schema(implementation = Vendedores.class)
+									)
+							)
+					),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorObject.class)
+                            )
+                    )
+			}
+	)
     @PostMapping(path = "/addseller", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addseller(@RequestBody Vendedores sellers)
-    {
-        return new ResponseEntity<>(service.saveVendedores(sellers), HttpStatus.CREATED);
+    public ResponseEntity<?> addseller(@RequestBody Vendedores sellers){
+		try {
+			return new ResponseEntity<>(service.saveVendedores(sellers), HttpStatus.CREATED);
+		} catch (Exception e) {
+			return badRequest(e);
+		}
     }
     
     /**
@@ -49,10 +85,38 @@ public class VendedoresController {
      * @autor CACP - 8/02/2021
      * @return
      */
+	@Operation(
+			summary = "Retorna todos los vendedores",
+			description = "consultar todos los vendedores.",
+			tags = "Vendedores"
+	)
+	@ApiResponses(
+			value = {
+					@ApiResponse(
+							responseCode = "200",
+							description = "Request is sccuessful",
+							content = @Content(
+									array = @ArraySchema(
+											schema = @Schema(implementation = Vendedores.class)
+									)
+							)
+					),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorObject.class)
+                            )
+                    )
+			}
+	)	
     @GetMapping(path = "/getsellers")
-    public ResponseEntity<?> getsellers()
-    {
-        return new ResponseEntity<>(service.getVendedores(), HttpStatus.OK);
+    public ResponseEntity<?> getsellers(){
+		try {
+			return new ResponseEntity<>(service.getVendedores(), HttpStatus.OK);
+		} catch (Exception e) {
+			return badRequest(e);
+		}
     }
     
     /**
@@ -61,16 +125,44 @@ public class VendedoresController {
      * @param idsellere
      * @return
      */
+	@Operation(
+			summary = "Retorna vendedor por id",
+			description = "consultar vendedor por Id.",
+			tags = "Vendedores"
+	)
+	@ApiResponses(
+			value = {
+					@ApiResponse(
+							responseCode = "200",
+							description = "Request is sccuessful",
+							content = @Content(
+									array = @ArraySchema(
+											schema = @Schema(implementation = Vendedores.class)
+									)
+							)
+					),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorObject.class)
+                            )
+                    )
+			}
+	)	
     @GetMapping(path = "/getseller/{idsellere}")
     public ResponseEntity<?> getseller(@PathVariable Integer idsellere){
-    	
-    	Vendedores vendedores = service.getVendedoresById(idsellere);
-    	
-    	if(vendedores != null){
-    		return new ResponseEntity<>(vendedores, HttpStatus.OK);
-    	}else {
-    		return new ResponseEntity<>("No se encontró ningún vendedor con el código " + idsellere, HttpStatus.BAD_REQUEST);
-    	}
+    	try {
+    		Vendedores vendedores = service.getVendedoresById(idsellere);
+    		
+    		if(vendedores != null){
+    			return new ResponseEntity<>(vendedores, HttpStatus.OK);
+    		}else {
+    			return new ResponseEntity<>("No se encontró ningún vendedor con el código " + idsellere, HttpStatus.BAD_REQUEST);
+    		}
+		} catch (Exception e) {
+			return badRequest(e);
+		}
     }
 
     /**
@@ -80,6 +172,31 @@ public class VendedoresController {
      * @return
      * @throws Exception
      */
+	@Operation(
+			summary = "actualiza informacion del vendedor",
+			description = "actualizar vendedor por Id.",
+			tags = "Vendedores"
+	)
+	@ApiResponses(
+			value = {
+					@ApiResponse(
+							responseCode = "200",
+							description = "Request is sccuessful",
+							content = @Content(
+									array = @ArraySchema(
+											schema = @Schema(implementation = Vendedores.class)
+									)
+							)
+					),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorObject.class)
+                            )
+                    )
+			}
+	)	
     @PutMapping(path = "/updateseller", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateseller(@RequestBody Vendedores vendors) throws Exception{
     	try {
@@ -93,7 +210,7 @@ public class VendedoresController {
     		return new ResponseEntity<>(service.updateVendedores(vendors), HttpStatus.CREATED);
     		
 		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return badRequest(e);
 		}
     }
     
@@ -104,14 +221,59 @@ public class VendedoresController {
      * @return
      * @throws Exception
      */
+	@Operation(
+			summary = "eliminar vendedor por id",
+			description = "elimina vendedor por Id.",
+			tags = "Vendedores"
+	)
+	@ApiResponses(
+			value = {
+					@ApiResponse(
+							responseCode = "202",
+							description = "Request is sccuessful - Accepted",
+							content = @Content(
+									array = @ArraySchema(
+											schema = @Schema(implementation = Vendedores.class)
+									)
+							)
+					),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorObject.class)
+                            )
+                    )
+			}
+	)	
     @DeleteMapping(path = "/deleteseller/{idsellere}")
     public ResponseEntity<?> deleteseller(@PathVariable Integer idsellere)throws Exception{
     	try {
     		return new ResponseEntity<>(service.deleteVendedoresById(idsellere), HttpStatus.ACCEPTED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return badRequest(e);
 		}
     }
 
+    private ResponseEntity<?> notFound() {
+        return new ResponseEntity<>(
+                new ErrorObject(HttpStatus.NOT_FOUND.toString(), "Member not found"),
+                HttpStatus.NOT_FOUND
+        );
+    }
+
+    private ResponseEntity<?> badRequest(Throwable throwable) {
+        return new ResponseEntity<>(
+                new ErrorObject(HttpStatus.BAD_REQUEST.toString(), "Bad request"),
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    private ResponseEntity<?> conflict() {
+        return new ResponseEntity<>(
+                new ErrorObject(HttpStatus.CONFLICT.toString(), "Member already exists"),
+                HttpStatus.CONFLICT
+        );
+    }
     
 }

@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.com.plug.examen.domain.entity.Compras;
-import ar.com.plug.examen.domain.entity.Estadocompras;
+import ar.com.plug.examen.domain.model.Compras;
+import ar.com.plug.examen.domain.model.Estadocompras;
 import ar.com.plug.examen.domain.service.ComprasRepository;
 import ar.com.plug.examen.domain.service.EstadocomprasRepository;
 

@@ -1,4 +1,4 @@
-package ar.com.plug.examen.domain.entity;
+package ar.com.plug.examen.domain.model;
 
 public class Message {
 
