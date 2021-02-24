@@ -77,7 +77,7 @@ public class ProductsController {
     @PostMapping(path = "/addproduct", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addProduct(@RequestBody ProductsApi products)throws Exception{
 		log.info("[addProduct] adicionando producto.");
-		return new ResponseEntity<>(service.saveProductos(products), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.saveProducts(products), HttpStatus.CREATED);
     }
     
     /**
@@ -113,7 +113,7 @@ public class ProductsController {
     @GetMapping(path = "/getproducts")
     public ResponseEntity<?> getProducts(){
 		log.info("[getProducts] consultando todos los productos.");
-		return new ResponseEntity<>(service.getProductos(), HttpStatus.OK);
+		return new ResponseEntity<>(service.getProducts(), HttpStatus.OK);
     }
     
     /**
@@ -150,7 +150,7 @@ public class ProductsController {
     @GetMapping(path = "/getproduct/{idproducto}")
     public ResponseEntity<?> getProduct(@PathVariable Integer idproducto){
 		log.info("[getProduct] consultando producto por id.");
-		ProductsApi productos = service.getProductoById(idproducto);
+		ProductsApi productos = service.getProductById(idproducto);
 		
 		if(productos != null) {
 			return new ResponseEntity<>(productos, HttpStatus.OK);
@@ -194,7 +194,7 @@ public class ProductsController {
     @PutMapping(path = "/updateproduct", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateProduct(@RequestBody ProductsApi products) throws Exception{
 		log.info("[updateProduct] actualizando producto.");
-		ProductsApi productos = service.updateProductos(products);
+		ProductsApi productos = service.updateProducts(products);
 		
 		if(productos == null) {
 			return new ResponseEntity<>("No vendor found with the name" + products.getDescription(), HttpStatus.BAD_REQUEST);
@@ -238,7 +238,7 @@ public class ProductsController {
     @DeleteMapping(path = "/deleteproduct/{idproducto}")
     public ResponseEntity<?> deleteProduct(@PathVariable Integer idproducto)throws Exception{
 		log.info("[deleteProduct] eliminando producto.");
-		return new ResponseEntity<>(service.deleteProductoById(idproducto), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(service.deleteProductById(idproducto), HttpStatus.ACCEPTED);
     }
 
 }

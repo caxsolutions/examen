@@ -77,7 +77,7 @@ public class VendorsController {
     @PostMapping(path = "/addseller", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addseller(@RequestBody VendorsApi sellers)throws Exception{
 		log.info("[addseller] adicionando vendedor.");
-		return new ResponseEntity<>(service.saveVendedores(sellers), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.saveVendors(sellers), HttpStatus.CREATED);
     }
     
     /**
@@ -113,7 +113,7 @@ public class VendorsController {
     @GetMapping(path = "/getsellers")
     public ResponseEntity<?> getsellers(){
 		log.info("[getsellers] consultando todos los vendedores.");
-		return new ResponseEntity<>(service.getVendedores(), HttpStatus.OK);
+		return new ResponseEntity<>(service.getVendors(), HttpStatus.OK);
     }
     
     /**
@@ -150,7 +150,7 @@ public class VendorsController {
     @GetMapping(path = "/getseller/{idsellere}")
     public ResponseEntity<?> getseller(@PathVariable Integer idsellere){
 		log.info("[getseller] consultando vendedor por id.");
-		VendorsApi vendedores = service.getVendedoresById(idsellere);
+		VendorsApi vendedores = service.getVendorsById(idsellere);
 		
 		if(vendedores != null){
 			return new ResponseEntity<>(vendedores, HttpStatus.OK);
@@ -194,13 +194,13 @@ public class VendorsController {
     @PutMapping(path = "/updateseller", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateseller(@RequestBody VendorsApi vendors) throws Exception{
 		log.info("[updateseller] actualizando vendedor.");
-		VendorsApi vendedores = service.updateVendedores(vendors);
+		VendorsApi vendedores = service.updateVendors(vendors);
 		
 		if(vendedores == null) {
 			return new ResponseEntity<>("No vendor found with the name " + vendors.getName(), HttpStatus.BAD_REQUEST);
 		}
 		
-		return new ResponseEntity<>(service.updateVendedores(vendors), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.updateVendors(vendors), HttpStatus.CREATED);
     }
     
     /**
@@ -238,7 +238,7 @@ public class VendorsController {
     @DeleteMapping(path = "/deleteseller/{idsellere}")
     public ResponseEntity<?> deleteseller(@PathVariable Integer idsellere)throws Exception{
 		log.info("[deleteseller] eliminando vendedor.");
-		return new ResponseEntity<>(service.deleteVendedoresById(idsellere), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(service.deleteVendorsById(idsellere), HttpStatus.ACCEPTED);
     }
     
 }

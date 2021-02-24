@@ -35,7 +35,7 @@ public class PurchasesServiceImpl {
 	 * @return
 	 */
 	@Transactional
-	public PurchasesApi saveCompras(PurchasesApi comprasApi) throws Exception{
+	public PurchasesApi savePurchase(PurchasesApi comprasApi) throws Exception{
 		
 		PurchasesMapper mapper = new PurchasesMapper();
 		
@@ -59,13 +59,11 @@ public class PurchasesServiceImpl {
 	 * @autor CACP - 5/02/2021
 	 * @return
 	 */
-	public List<PurchasesApi> getCompras() {
+	public List<PurchasesApi> getPurchases() {
 		
 		PurchasesMapper mapper = new PurchasesMapper();
 		
-		List<Purchases> comprasList =  comprasRepository.findAll();
-		
-		return mapper.mapAsList(comprasList, PurchasesApi.class);
+		return mapper.mapAsList(comprasRepository.findAll(), PurchasesApi.class);
 	}
 
 	/**
@@ -74,7 +72,7 @@ public class PurchasesServiceImpl {
 	 * @param idcompra
 	 * @return
 	 */
-	public PurchasesApi getComprasById(Integer idCompra) {
+	public PurchasesApi getPurchasesById(Integer idCompra) {
 		PurchasesMapper mapper = new PurchasesMapper();
 		Purchases compras = comprasRepository.findById(idCompra).orElse(null);
 		return mapper.map(compras, PurchasesApi.class); 

@@ -21,8 +21,8 @@ import org.testng.collections.Lists;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import ar.com.plug.examen.app.api.PurchasesApi;
-import ar.com.plug.examen.domain.service.impl.PurchasesServiceImpl;
 import ar.com.plug.examen.domain.service.impl.PurchaseEstatusServiceImpl;
+import ar.com.plug.examen.domain.service.impl.PurchasesServiceImpl;
 /**
  * @autor luxos CACP - 11/02/2021
  *
@@ -62,7 +62,7 @@ public class PurchasesControllerTest extends AbstractControllerTest{
 		final PurchasesApi cliente = RANDOM.nextObject(PurchasesApi.class);
 		final PurchasesApi response = RANDOM.nextObject(PurchasesApi.class);
 		
-		Mockito.when(service.saveCompras(cliente)).thenReturn(response);
+		Mockito.when(service.savePurchase(cliente)).thenReturn(response);
 		
         assertEquals(perform(post(URLADDCLIENT), cliente, new TypeReference<PurchasesApi>() {}, status().isCreated()), response);
 	}
@@ -72,7 +72,7 @@ public class PurchasesControllerTest extends AbstractControllerTest{
 		
 		final List<PurchasesApi> response = Lists.newArrayList(RANDOM.nextObject(PurchasesApi.class));
         
-		Mockito.when(service.getCompras()).thenReturn(response);
+		Mockito.when(service.getPurchases()).thenReturn(response);
         
 		assertEquals(perform(get(URLGETCLIENTS), null, new TypeReference<List<PurchasesApi>>() {}, status().isOk()), response);
 	}
@@ -83,7 +83,7 @@ public class PurchasesControllerTest extends AbstractControllerTest{
 		final PurchasesApi cliente = RANDOM.nextObject(PurchasesApi.class);
 		final PurchasesApi response = RANDOM.nextObject(PurchasesApi.class);
 		
-		Mockito.when(service.getComprasById(cliente.getIdpurchase())).thenReturn(response);
+		Mockito.when(service.getPurchasesById(cliente.getIdpurchase())).thenReturn(response);
 		
         assertEquals(perform(get(URLGETCLIENT + "/"+ cliente.getIdpurchase()), null, new TypeReference<PurchasesApi>() {}, status().isOk()), response);
 	}

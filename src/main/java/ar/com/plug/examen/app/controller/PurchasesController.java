@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.com.plug.examen.app.api.PurchaseStatusApi;
 import ar.com.plug.examen.app.api.PurchasesApi;
 import ar.com.plug.examen.app.config.ConstantsMessage;
 import ar.com.plug.examen.app.exception.ExamenException;
-import ar.com.plug.examen.app.api.PurchaseStatusApi;
 import ar.com.plug.examen.domain.model.ErrorObject;
-import ar.com.plug.examen.domain.service.impl.PurchasesServiceImpl;
 import ar.com.plug.examen.domain.service.impl.PurchaseEstatusServiceImpl;
+import ar.com.plug.examen.domain.service.impl.PurchasesServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -79,7 +79,7 @@ public class PurchasesController {
     @PostMapping(path = "/addshop", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addShop(@RequestBody PurchasesApi products)throws Exception{
 		log.info("[addShop] adicionando compra.");
-		return new ResponseEntity<>(service.saveCompras(products), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.savePurchase(products), HttpStatus.CREATED);
     }
 
     /**
@@ -115,7 +115,7 @@ public class PurchasesController {
     @GetMapping(path = "/getshops")
     public ResponseEntity<?> getshops(){
 		log.info("[getshops] consultando todas las compras.");
-		return new ResponseEntity<>(service.getCompras(), HttpStatus.OK);
+		return new ResponseEntity<>(service.getPurchases(), HttpStatus.OK);
     }
 
     /**
@@ -152,7 +152,7 @@ public class PurchasesController {
     @GetMapping(path = "/getshop/{idcompra}")
     public ResponseEntity<?> getshop(@PathVariable Integer idcompra){
 		log.info("[getshop] consultando compra por id.");
-		PurchasesApi compras = service.getComprasById(idcompra);
+		PurchasesApi compras = service.getPurchasesById(idcompra);
 		
 		if(compras != null) {
 			return new ResponseEntity<>(compras, HttpStatus.OK);

@@ -127,6 +127,27 @@
 			<artifactId>swagger-annotations</artifactId>
 			<version>1.5.24</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.mockito</groupId>
+		    <artifactId>mockito-junit-jupiter</artifactId>
+		    <version>3.5.15</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.mockito</groupId>
+		    <artifactId>mockito-core</artifactId>
+		    <version>3.5.15</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.mockito</groupId>
+		    <artifactId>mockito-inline</artifactId>
+		    <version>3.5.15</version>
+		    <scope>test</scope>
+		</dependency>
 
 	</dependencies>
 

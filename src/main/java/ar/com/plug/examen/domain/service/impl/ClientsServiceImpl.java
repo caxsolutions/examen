@@ -34,7 +34,7 @@ public class ClientsServiceImpl {
 	 * @throws Exception 
 	 */
 	@Transactional
-	public ClientsApi saveClientes(ClientsApi clientesApi) throws Exception {
+	public ClientsApi saveClients(ClientsApi clientesApi) throws Exception {
 		
 		ClientsMapper mapper = new ClientsMapper();
 		
@@ -49,13 +49,11 @@ public class ClientsServiceImpl {
 	 * @autor CACP - 5/02/2021
 	 * @return
 	 */
-	public List<ClientsApi> getClientes() {
+	public List<ClientsApi> getClients() {
 		
 		ClientsMapper mapper = new ClientsMapper();
 		
-		List<Clients> clienteList =  clienteRepository.findAll();
-		
-		return mapper.mapAsList(clienteList, ClientsApi.class);
+		return mapper.mapAsList(clienteRepository.findAll(), ClientsApi.class);
 	}
 
 	/**
@@ -64,7 +62,7 @@ public class ClientsServiceImpl {
 	 * @param idCliente
 	 * @return
 	 */
-	public ClientsApi getClientesById(Integer idCliente) {
+	public ClientsApi getClientsById(Integer idCliente) {
 		ClientsMapper mapper = new ClientsMapper();
 		Clients clientes = clienteRepository.findById(idCliente).orElse(null);
 		return mapper.map(clientes, ClientsApi.class);
@@ -78,11 +76,7 @@ public class ClientsServiceImpl {
 	 * @throws Exception 
 	 */
 	@Transactional
-	public ClientsApi updateClientes(ClientsApi clientes) throws Exception {
-		
-		if(clientes == null || clientes.getIdclient() == null) {
-			throw new ExamenException("The customerid field cannot be null.");
-		}
+	public ClientsApi updateClients(ClientsApi clientes) {
 		
 		ClientsMapper mapper = new ClientsMapper();
 		
@@ -103,7 +97,7 @@ public class ClientsServiceImpl {
 	 * @return
 	 */
 	@Transactional
-	public MessageApi deleteclienteById(Integer idcliente) throws Exception{
+	public MessageApi deleteclientById(Integer idcliente) throws Exception{
 		
 		if(idcliente == null) {
 			throw new ExamenException("The customerid field cannot be null.");

@@ -68,5 +68,32 @@ public class PurchaseStatus implements Serializable {
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date statedate;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PurchaseStatus other = (PurchaseStatus) obj;
+		if (idpurchasestatus == null) {
+			if (other.idpurchasestatus != null)
+				return false;
+		} else if (!idpurchasestatus.equals(other.idpurchasestatus))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idpurchasestatus == null) ? 0 : idpurchasestatus.hashCode());
+		return result;
+	}
+	
+	
 	
 }

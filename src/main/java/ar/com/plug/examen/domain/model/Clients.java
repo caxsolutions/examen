@@ -52,5 +52,31 @@ public class Clients implements Serializable {
     )	
 	@Column(nullable = false, length = 200)
 	private String name;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Clients other = (Clients) obj;
+		if (idclient == null) {
+			if (other.idclient != null)
+				return false;
+		} else if (!idclient.equals(other.idclient))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idclient == null) ? 0 : idclient.hashCode());
+		return result;
+	}
+	
 	
 }

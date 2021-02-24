@@ -33,7 +33,7 @@ public class ProductsServiceImpl {
 	 * @return
 	 */
 	@Transactional
-	public ProductsApi saveProductos(ProductsApi productosApi) throws Exception{
+	public ProductsApi saveProducts(ProductsApi productosApi) throws Exception{
 
 		ProductsMapper mapper = new ProductsMapper();
 		
@@ -49,12 +49,10 @@ public class ProductsServiceImpl {
 	 * @autor CACP - 5/02/2021
 	 * @return
 	 */
-	public List<ProductsApi> getProductos() {
+	public List<ProductsApi> getProducts() {
 		ProductsMapper mapper = new ProductsMapper();
 		
-		List<Products> clienteList =  productoRepository.findAll();
-		
-		return mapper.mapAsList(clienteList, ProductsApi.class);
+		return mapper.mapAsList(productoRepository.findAll(), ProductsApi.class);
 	}
 
 	/**
@@ -62,7 +60,7 @@ public class ProductsServiceImpl {
 	 * @autor CACP - 5/02/2021
 	 * @return
 	 */
-	public ProductsApi getProductoById(Integer idProducto) {
+	public ProductsApi getProductById(Integer idProducto) {
 		ProductsMapper mapper = new ProductsMapper();
 		Products prod = productoRepository.findById(idProducto).orElse(null);
 		return mapper.map(prod, ProductsApi.class);
@@ -76,11 +74,7 @@ public class ProductsServiceImpl {
 	 * @throws Exception 
 	 */
 	@Transactional
-	public ProductsApi updateProductos(ProductsApi productos) throws Exception {
-		
-		if(productos == null || productos.getIdproduct() == null) {
-			throw new ExamenException("The productid field cannot be null.");
-		}
+	public ProductsApi updateProducts(ProductsApi productos) throws Exception {
 		
 		ProductsMapper mapper = new ProductsMapper();
 		
@@ -103,10 +97,10 @@ public class ProductsServiceImpl {
 	 * @return
 	 */
 	@Transactional
-	public MessageApi deleteProductoById(Integer idProducto) throws Exception{
+	public MessageApi deleteProductById(Integer idProducto) throws Exception{
 		
 		if(idProducto == null) {
-			throw new Exception("The productid field cannot be null.");
+			throw new ExamenException("The productid field cannot be null.");
 		}
 		
 		MessageApi api = new MessageApi();

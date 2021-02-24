@@ -62,7 +62,7 @@ public class ClientsControllerTest extends AbstractControllerTest{
 		final ClientsApi cliente = RANDOM.nextObject(ClientsApi.class);
 		final ClientsApi response = RANDOM.nextObject(ClientsApi.class);
 		
-		Mockito.when(service.saveClientes(cliente)).thenReturn(response);
+		Mockito.when(service.saveClients(cliente)).thenReturn(response);
 		
         assertEquals(perform(post(URLADDCLIENT), cliente, new TypeReference<ClientsApi>() {}, status().isCreated()), response);
 	}
@@ -72,7 +72,7 @@ public class ClientsControllerTest extends AbstractControllerTest{
 		
 		final List<ClientsApi> response = Lists.newArrayList(RANDOM.nextObject(ClientsApi.class));
         
-		Mockito.when(service.getClientes()).thenReturn(response);
+		Mockito.when(service.getClients()).thenReturn(response);
         
 		assertEquals(perform(get(URLGETCLIENTS), null, new TypeReference<List<ClientsApi>>() {}, status().isOk()), response);
 	}
@@ -83,7 +83,7 @@ public class ClientsControllerTest extends AbstractControllerTest{
 		final ClientsApi cliente = RANDOM.nextObject(ClientsApi.class);
 		final ClientsApi response = RANDOM.nextObject(ClientsApi.class);
 		
-		Mockito.when(service.getClientesById(cliente.getIdclient())).thenReturn(response);
+		Mockito.when(service.getClientsById(cliente.getIdclient())).thenReturn(response);
 		
         assertEquals(perform(get(URLGETCLIENT + "/"+ cliente.getIdclient()), null, new TypeReference<ClientsApi>() {}, status().isOk()), response);
 	}
@@ -93,7 +93,7 @@ public class ClientsControllerTest extends AbstractControllerTest{
 		final ClientsApi cliente = RANDOM.nextObject(ClientsApi.class);
 		final ClientsApi response = RANDOM.nextObject(ClientsApi.class);
 		
-		Mockito.when(service.updateClientes(cliente)).thenReturn(response);
+		Mockito.when(service.updateClients(cliente)).thenReturn(response);
 		
         assertEquals(perform(put(URLPUTCLIENT), cliente, new TypeReference<ClientsApi>() {}, status().isCreated()), response);
 	}

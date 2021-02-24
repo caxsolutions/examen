@@ -33,7 +33,7 @@ public class VendorsServiceImpl {
 	 * @return
 	 */
 	@Transactional
-	public VendorsApi saveVendedores(VendorsApi vendedoresApi) throws Exception{
+	public VendorsApi saveVendors(VendorsApi vendedoresApi) throws Exception{
 
 		VendorsMapper mapper = new VendorsMapper();
 			
@@ -49,7 +49,7 @@ public class VendorsServiceImpl {
 	 * @autor CACP - 5/02/2021
 	 * @return
 	 */
-	public List<VendorsApi> getVendedores() {
+	public List<VendorsApi> getVendors() {
 		VendorsMapper mapper = new VendorsMapper();
 		
 		List<Vendors> vendedoresList =  vendedoresRepository.findAll();
@@ -62,7 +62,7 @@ public class VendorsServiceImpl {
 	 * @autor CACP - 5/02/2021
 	 * @return
 	 */
-	public VendorsApi getVendedoresById(Integer idVendedores) {
+	public VendorsApi getVendorsById(Integer idVendedores) {
 		VendorsMapper mapper = new VendorsMapper();
 		Vendors vendedores = vendedoresRepository.findById(idVendedores).orElse(null);
 		return mapper.map(vendedores, VendorsApi.class);
@@ -76,11 +76,7 @@ public class VendorsServiceImpl {
 	 * @throws Exception 
 	 */
 	@Transactional
-	public VendorsApi updateVendedores(VendorsApi vendedores) throws Exception {
-		
-		if(vendedores == null || vendedores.getIdseller() == null) {
-			throw new ExamenException("The vendorid field cannot be null .");
-		}
+	public VendorsApi updateVendors(VendorsApi vendedores) throws Exception {
 		
 		VendorsMapper mapper = new VendorsMapper();
 		
@@ -102,7 +98,7 @@ public class VendorsServiceImpl {
 	 * @return
 	 */
 	@Transactional
-	public MessageApi deleteVendedoresById(Integer idVendedores) throws Exception{
+	public MessageApi deleteVendorsById(Integer idVendedores) throws Exception{
 		
 		if(idVendedores == null) {
 			throw new ExamenException("The vendorid field cannot be null.");

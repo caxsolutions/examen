@@ -82,7 +82,7 @@ public class ClientsController {
     @PostMapping(path = "/addclient", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addclient(@Valid @RequestBody ClientsApi clients)throws Exception{
 			log.info("[addclient] adicionando clientes.");
-			return new ResponseEntity<>(service.saveClientes(clients), HttpStatus.CREATED);
+			return new ResponseEntity<>(service.saveClients(clients), HttpStatus.CREATED);
     }
 
     /**
@@ -118,7 +118,7 @@ public class ClientsController {
     @GetMapping(path = "/getclients")
     public ResponseEntity<?> getclients(){
     		log.info("[getclients] consultando todos los clientes.");
-    		return new ResponseEntity<>(service.getClientes(), HttpStatus.OK);
+    		return new ResponseEntity<>(service.getClients(), HttpStatus.OK);
     }
     
     /**
@@ -155,7 +155,7 @@ public class ClientsController {
     @GetMapping(path = "/getclient/{idcliente}")
     public ResponseEntity<?> getclient(@Valid @PathVariable Integer idcliente){
 		log.info("[getclient] consultando cliente por id.");
-		ClientsApi clientes = service.getClientesById(idcliente);
+		ClientsApi clientes = service.getClientsById(idcliente);
 		if(clientes != null) {
 			return new ResponseEntity<>(clientes, HttpStatus.OK);
 		}else {
@@ -198,7 +198,7 @@ public class ClientsController {
     @PutMapping(path = "/updateclient", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateclient(@Valid @RequestBody ClientsApi clientes) throws Exception{
 		log.info("[updateclient] actualizando cliente.");
-		ClientsApi clientes2 = service.updateClientes(clientes);
+		ClientsApi clientes2 = service.updateClients(clientes);
 		
 		if(clientes2 == null) {
 			return new ResponseEntity<>("No vendor found with the name " + clientes.getName(), HttpStatus.BAD_REQUEST);
@@ -242,6 +242,6 @@ public class ClientsController {
     @DeleteMapping(path = "/deleteclient/{idcliente}")
     public ResponseEntity<?> deleteclient(@Valid @PathVariable Integer idcliente)throws Exception{
 		log.info("[deleteclient] eliminando cliente.");
-		return new ResponseEntity<>(service.deleteclienteById(idcliente), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(service.deleteclientById(idcliente), HttpStatus.ACCEPTED);
     }
 }

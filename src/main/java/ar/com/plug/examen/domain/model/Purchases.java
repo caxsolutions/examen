@@ -79,6 +79,31 @@ public class Purchases implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
 	private Date purchasedate;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Purchases other = (Purchases) obj;
+		if (idpurchase == null) {
+			if (other.idpurchase != null)
+				return false;
+		} else if (!idpurchase.equals(other.idpurchase))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idpurchase == null) ? 0 : idpurchase.hashCode());
+		return result;
+	}
 	
 	//@OneToMany(mappedBy = "compra", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	//private Set<Estadocompras> estadocompras = new HashSet<>();

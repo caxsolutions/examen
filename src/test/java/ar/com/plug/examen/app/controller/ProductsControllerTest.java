@@ -60,7 +60,7 @@ public class ProductsControllerTest extends AbstractControllerTest{
 		final ProductsApi cliente = RANDOM.nextObject(ProductsApi.class);
 		final ProductsApi response = RANDOM.nextObject(ProductsApi.class);
 		
-		Mockito.when(service.saveProductos(cliente)).thenReturn(response);
+		Mockito.when(service.saveProducts(cliente)).thenReturn(response);
 		
         assertEquals(perform(post(URLADDCLIENT), cliente, new TypeReference<ProductsApi>() {}, status().isCreated()), response);
 	}
@@ -70,7 +70,7 @@ public class ProductsControllerTest extends AbstractControllerTest{
 		
 		final List<ProductsApi> response = Lists.newArrayList(RANDOM.nextObject(ProductsApi.class));
         
-		Mockito.when(service.getProductos()).thenReturn(response);
+		Mockito.when(service.getProducts()).thenReturn(response);
         
 		assertEquals(perform(get(URLGETCLIENTS), null, new TypeReference<List<ProductsApi>>() {}, status().isOk()), response);
 	}
@@ -81,7 +81,7 @@ public class ProductsControllerTest extends AbstractControllerTest{
 		final ProductsApi cliente = RANDOM.nextObject(ProductsApi.class);
 		final ProductsApi response = RANDOM.nextObject(ProductsApi.class);
 		
-		Mockito.when(service.getProductoById(cliente.getIdproduct())).thenReturn(response);
+		Mockito.when(service.getProductById(cliente.getIdproduct())).thenReturn(response);
 		
         assertEquals(perform(get(URLGETCLIENT + "/"+ cliente.getIdproduct()), null, new TypeReference<ProductsApi>() {}, status().isOk()), response);
 	}
@@ -91,7 +91,7 @@ public class ProductsControllerTest extends AbstractControllerTest{
 		final ProductsApi cliente = RANDOM.nextObject(ProductsApi.class);
 		final ProductsApi response = RANDOM.nextObject(ProductsApi.class);
 		
-		Mockito.when(service.updateProductos(cliente)).thenReturn(response);
+		Mockito.when(service.updateProducts(cliente)).thenReturn(response);
 		
         assertEquals(perform(put(URLPUTCLIENT), cliente, new TypeReference<ProductsApi>() {}, status().isCreated()), response);
 	}
