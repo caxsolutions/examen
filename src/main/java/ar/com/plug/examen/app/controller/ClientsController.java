@@ -3,6 +3,7 @@
  */
 package ar.com.plug.examen.app.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,11 @@ public class ClientsController {
 	 */
 	@Autowired
 	private ClientsServiceImpl service;
-	
+
+	private final String IPGOOGLECLOUD = "104.197.232.113";
+	private final String IPGOOGLECLOUD_LOCAL = "0:0:0:0:0:0:0:1";
+	private final Integer TIPOINSTALCIONCLOUD = 91;
+
 	@Operation(
 			summary = ConstantsMessage.SWAGGER_INFO_CLIENT_SUMMARY,
 			description = ConstantsMessage.SWAGGER_INFO_CLIENT_DESCRIPTION,
@@ -80,8 +85,12 @@ public class ClientsController {
 			}
 	)
     @PostMapping(path = "/addclient", produces = {MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addclient(@Valid @RequestBody ClientsApi clients)throws Exception{
+    public ResponseEntity<?> addclient(@Valid @RequestBody ClientsApi clients, HttpServletRequest request)throws Exception{
 			log.info("[addclient] adicionando clientes.");
+			
+    		System.out.println(request.getRemoteAddr());
+    		System.out.println(request.getRemoteHost());
+
 			return new ResponseEntity<>(service.saveClients(clients), HttpStatus.CREATED);
     }
 
@@ -116,8 +125,34 @@ public class ClientsController {
 			}
 	)
     @GetMapping(path = "/getclients")
-    public ResponseEntity<?> getclients(){
+    public ResponseEntity<?> getclients(HttpServletRequest request){
     		log.info("[getclients] consultando todos los clientes.");
+
+    		System.out.println(request.getRemoteAddr());
+    		System.out.println(request.getRemoteHost());
+    		
+			if(request != null && request.getRemoteAddr() != null) {
+			
+				System.out.println("el request no esta vacio");
+				
+				if(request.getRemoteAddr().equals(IPGOOGLECLOUD) && request.getRemoteHost().equals(IPGOOGLECLOUD)){
+					
+					System.out.println("la ip es igual a IPGOOGLECLOUD : " + IPGOOGLECLOUD);
+				}
+				
+				if(request.getRemoteAddr().equals(IPGOOGLECLOUD_LOCAL) && !request.getRemoteHost().equals(IPGOOGLECLOUD_LOCAL)) {
+					
+					System.out.println("la ip es igual aIPGOOGLECLOUD_LOCAL: " + IPGOOGLECLOUD_LOCAL);
+				}
+				
+				
+				if((!request.getRemoteAddr().equals(IPGOOGLECLOUD) && !request.getRemoteHost().equals(IPGOOGLECLOUD))
+								&& (!request.getRemoteAddr().equals(IPGOOGLECLOUD_LOCAL) && !request.getRemoteHost().equals(IPGOOGLECLOUD_LOCAL))){
+					
+					System.out.println("801 - No tiene permisos para consumir los servicios de facturacion eléctronica.");
+				}				
+			}
+    		
     		return new ResponseEntity<>(service.getClients(), HttpStatus.OK);
     }
     
